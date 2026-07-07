@@ -1,0 +1,103 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the application",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "createdAt": { "type": "timestamp" },
+        "settings": {
+          "type": "object",
+          "properties": {
+            "language": { "type": "string" },
+            "bugSearching": { "type": "boolean" },
+            "darkMode": { "type": "boolean" }
+          }
+        }
+      },
+      "required": ["uid", "email", "createdAt"]
+    },
+    "ChatSession": {
+      "title": "ChatSession",
+      "description": "A chat session between the user and the AI",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "createdAt": { "type": ["timestamp", "number"] },
+        "updatedAt": { "type": ["timestamp", "number"] },
+        "userId": { "type": "string" },
+        "modes": { "type": "array", "items": { "type": "string" } },
+        "timestamp": { "type": ["number", "timestamp"] }
+      },
+      "required": ["id", "title", "createdAt", "updatedAt", "userId", "modes", "timestamp"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "A single message in a chat session",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "assistant"] },
+        "content": { "type": "string" },
+        "timestamp": { "type": "number" },
+        "userId": { "type": "string" }
+      },
+      "required": ["id", "sessionId", "role", "content", "timestamp", "userId"]
+    },
+    "MindMode": {
+      "title": "MindMode",
+      "description": "A custom mind mode created by the user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "icon": { "type": "string" },
+        "systemInstruction": { "type": "string" },
+        "userId": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["id", "label", "icon", "systemInstruction", "userId", "createdAt"]
+    },
+    "Memory": {
+      "title": "Memory",
+      "description": "A long-term memory fact about the user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fact": { "type": "string" },
+        "userId": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["id", "fact", "userId", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and settings"
+    },
+    "sessions/{sessionId}": {
+      "schema": "ChatSession",
+      "description": "Chat sessions"
+    },
+    "messages/{messageId}": {
+      "schema": "Message",
+      "description": "Messages within chat sessions"
+    },
+    "mindModes/{modeId}": {
+      "schema": "MindMode",
+      "description": "Custom mind modes"
+    },
+    "memories/{memoryId}": {
+      "schema": "Memory",
+      "description": "Long-term memories"
+    }
+  }
+}

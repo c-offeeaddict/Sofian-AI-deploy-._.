@@ -1,0 +1,14 @@
+{
+  "name": "Sofian AI",
+  "description": "Advanced AI Assistant with bio-synced memory, real-time research, and immersive visualizations.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation",
+    "gyroscope",
+    "accelerometer"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
